@@ -1,5 +1,5 @@
 import './App.css';
-import FlightInformation from './components/FlightInformation.js';
+import FlightInfo from './components/FlightInfo.js';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         Flight React App
       </div>
       <div>
-        <FlightInformation></FlightInformation>
+        <FlightInfo></FlightInfo>
       </div>
     </div>
     
