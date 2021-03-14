@@ -7,18 +7,22 @@ function FlightInfoForm(props) {
     const [originQuery, setOriginQuery] = useState(""); // query to use when fetching origins places
     const [showOrigins, setShowOrigins] = useState(false); // controls when origin-select screen is shown
     //const [origin, setOrigin] = useState(""); // final origin selected by user
-    //const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
+    const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
 
     const [destinationPlaces, setDestinationPlaces] = useState([]); // Places list for destinations
     const [destinationQuery, setDestinationQuery] = useState(""); // query to use when fetching destinations
     const [showDestinations, setShowDestinations] = useState(false); // controls when destination-select screen is shown
     //const [destination, setDestination] = useState(""); // final destination selected by user
-    //const [destinationSelected, setDestinationSelected] = useState(true); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
+    const [destinationSelected, setDestinationSelected] = useState(false); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
     
     
 
     function handleOrigin(e) {
         e.preventDefault();
+        if (originQuery == "") {
+            alert("Please enter an origin city or region!");
+            return;
+        }
         const options = {
             method: "GET",
             headers: {
@@ -35,11 +39,15 @@ function FlightInfoForm(props) {
             setShowOrigins(true);
         }
         originsAPICall();
-        setOriginQuery("");
+        //setOriginQuery("");
     }
     
     function handleDestination(e) {
         e.preventDefault();
+        if (destinationQuery == "") {
+            alert("Please enter a destination city or region!");
+            return;
+        }
         const options = {
             method: "GET",
             headers: {
@@ -56,42 +64,68 @@ function FlightInfoForm(props) {
             setShowDestinations(true);
         }
         destinationsAPICall();
-        setDestinationQuery("");
+        //setDestinationQuery("");
     }
 
 
     function handleOriginSelect(e) {
-        e.preventDefault();
         props.setOrigin(e.target.value);
-        props.setOriginSelected(true);   
+        setOriginSelected(true);   
     }
     function handleDestinationSelect(e) {
-        e.preventDefault();
         props.setDestination(e.target.value);
-        props.setDestinationSelected(true);
+        setDestinationSelected(true);
     }
+
+    function handleOutboundDate(e) {
+        props.setOutboundDate(e.target.value);
+    }
+
+    function handleInboundDate(e) {
+        props.setInboundDate(e.target.value);
+    }
+
 
     return (
         <div className="FlightInfoTable">
+            <form onSubmit={props.onSubmit}>
             
-            <form onSubmit={handleOrigin}>
-                <label>
-                    Search Origin: <input value={originQuery} onChange={e => setOriginQuery(e.target.value)}/>
-                </label>
-                <button>Submit</button>
-            </form>
-            {showOrigins ? <AirportSelect places={originPlaces} value={props.origin} onChange={handleOriginSelect}/> : <></>}
+                {/* Section for Origin */}
+                <div>
+                    <label>
+                        Search Origin: <input value={originQuery} onChange={e => setOriginQuery(e.target.value)}/>
+                    </label>
+                    <button type="button" onClick={handleOrigin}>Submit</button>
+                    {showOrigins ? <AirportSelect places={originPlaces} value={props.origin} onChange={handleOriginSelect}/> : <></>}
+                </div>
+                
 
-            <form onSubmit={handleDestination}>
-                <label>
-                    Search Destination: <input value={destinationQuery} onChange={e => setDestinationQuery(e.target.value)}/>
-                </label>
-                <button>Submit</button>
-            </form>
+                {/* Section for Destination */}
+                <div>
+                    <label>
+                        Search Destination: <input value={destinationQuery} onChange={e => setDestinationQuery(e.target.value)}/>
+                    </label>
+                    <button type="button" onClick={handleDestination}>Submit</button>
+                    {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
+                </div>
 
-            
-            {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
-           
+                {/* Outbound Date Section */}
+                <div>
+                    <label>
+                        Departure Date: <input type="date" value={props.outboundDate} onChange={handleOutboundDate}></input> <i>(optional)</i>
+                    </label>
+                </div>
+
+                {/* Outbound Date Section */}
+                <div>
+                    <label>
+                        Return Date: <input type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input> <i>(optional)</i>
+                    </label>
+                </div>
+
+                {/* Form Submit Button */}
+                {(destinationSelected && originSelected) ? <button>Find Flights!</button> : <></>}
+            </form>
         </div>
     )
 }
