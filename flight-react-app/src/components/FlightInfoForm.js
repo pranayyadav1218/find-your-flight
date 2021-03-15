@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import AirportSelect from './AirportSelect.js';
-import { useGetPlacesQuery } from '../custom_hooks/skyscannerAPI_hooks'
+import { usePlacesQuery } from '../custom_hooks/skyscannerAPI_hooks'
 
 function FlightInfoForm(props) {
     // Values for origin
     const [originQuery, setOriginQuery] = useState(""); // query to use when fetching origins places
     const [showOrigins, setShowOrigins] = useState(false); // controls when origin-select screen is shown
-    const originPlaces = useGetPlacesQuery(originQuery); // Places list for origins, value is retrieved from a custom hook
+    const originPlaces = usePlacesQuery(originQuery); // Places list for origins, value is retrieved from a custom hook
     const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
 
     
     const [destinationQuery, setDestinationQuery] = useState(""); // query to use when fetching destinations
-    const destinationPlaces = useGetPlacesQuery(destinationQuery); // Places list for destinations, value retrieved from custom hook
+    const destinationPlaces = usePlacesQuery(destinationQuery); // Places list for destinations, value retrieved from custom hook
     const [showDestinations, setShowDestinations] = useState(false); // controls when destination-select screen is shown
     const [destinationSelected, setDestinationSelected] = useState(false); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
     
@@ -33,12 +33,20 @@ function FlightInfoForm(props) {
 
 
     function handleOriginSelect(e) {
-        props.setOrigin(e.target.value);
-        setOriginSelected(true);   
+        if (e.target.value !== "-") {
+            props.setOrigin(e.target.value);
+            setOriginSelected(true);   
+        }
+        else
+            setOriginSelected(false);
     }
     function handleDestinationSelect(e) {
-        props.setDestination(e.target.value);
-        setDestinationSelected(true);
+        if (e.target.value !== "-") {
+            props.setDestination(e.target.value);
+            setDestinationSelected(true);
+        }
+        else 
+            setDestinationSelected(false);
     }
 
     function handleOutboundDate(e) {
@@ -88,7 +96,7 @@ function FlightInfoForm(props) {
                 </div>
 
                 {/* Form Submit Button */}
-                {(destinationSelected && originSelected) ? <button>Find Flights!</button> : <></>}
+                <button disabled={!(destinationSelected && originSelected)}>Find Flights!</button>
             </form>
         </div>
     )

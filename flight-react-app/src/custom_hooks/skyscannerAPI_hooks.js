@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
     why these functions are named 'use...()'
 */
 
-function useGetPlacesQuery(query) {
+function usePlacesQuery(query) {
     const [places, setPlaces] = useState([]);
     let result = places;
     // Only makes the API call when the value of query changes and when query is not an empty string
@@ -27,7 +27,7 @@ function useGetPlacesQuery(query) {
         async function placesAPICall() {
             let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({query: query}), options);
             response = await response.json();
-            console.log(response.Places);
+            //console.log(response.Places);
             setPlaces(response.Places);
             
         }
@@ -40,8 +40,9 @@ function useGetPlacesQuery(query) {
     return result;
 }
 
-function useGetQuotes(origin, destination, outboundDate, inboundDate, currency) {
-    const [quotes, setQuotes] = useState([]);
+function useBrowseDates(responseId, origin, destination, outboundDate, inboundDate, currency) {
+    const [arr, setArr] = useState([]);
+    let result = arr;
     // Only makes API call when there is a change to any of the function arguments AND when origin && destination are not empty strings
     useEffect(() => {
         const options =  {
@@ -51,53 +52,75 @@ function useGetQuotes(origin, destination, outboundDate, inboundDate, currency) 
                 "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
             }
         };
-        async function quotesAPICall() {
+        async function APICall() {
             let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/${currency}/en-US/${origin}/${destination}/${outboundDate}/${inboundDate}`,
                 options);
-            response = await response.json().then((res) => {
-                console.log(res);
-                setQuotes(res.Quotes);
-                setQuotes((q) => {
-                    return q;
+            response = await response.json().then((response) => {
+                switch (responseId) {
+                    case "Quotes":
+                        setArr(response.Quotes);
+                        break;
+                    case "Carriers":
+                        setArr(response.Carriers)
+                        break;
+                    case "Places":
+                        setArr(response.Places)
+                        break;
+                    case "Currencies":
+                        setArr(response.Currencies)
+                        break;
+                    case "OutboundDates":
+                        if (response.Dates !== undefined)
+                            setArr(response.Dates.OutboundDates);
+                        break;
+                    case "InboundDates":
+                        if (response.Dates !== undefined)
+                            setArr(response.Dates.InboundDates);
+                        break;
+                    default:
+                        break;
+                }
+                setArr((state) => {
+                    result = state;
+                    return state;
                 });
-                
             });
-                        
         } 
-        if (origin !== "" && destination !== "") {
-            quotesAPICall();
+        let allowAPICall = ((origin !== "" && destination !== "" ) && (origin !== undefined && destination !== undefined) && (currency !== undefined));
+        if (allowAPICall) {
+            APICall();
         }
+
     }, [origin, destination, outboundDate, inboundDate, currency]);
-    
+    //console.log(result);
+    return result;
 }
 
-function useGetCarriers() {
+function useCurrenciesList() {
+    const [list, setList] = useState([]);
+    let result = list;
+    useEffect(()=> {
+        const options =  {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "a80276efe6mshdba99d004ae62b1p11b87cjsn61b6448bc521",
+                "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
+            }
+        }
+        async function currencyAPICall() {
+            let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies", 
+               options);
+            response = await response.json();
+            setList(response.Currencies);
+        }
+        currencyAPICall();
+    }, []);
 
-}
-
-function useGetPlaces() {
-
-}
-
-function useGetCurrencies() {
-
-}
-
-function useGetOutboundDates() {
-
-}
-
-function useGetInboundDates() {
-
+    return result;
 }
 
 export {
-    useGetPlacesQuery,
-    useGetPlaces,
-    useGetCarriers,
-    useGetQuotes,
-    useGetCurrencies,
-    useGetInboundDates,
-    useGetOutboundDates,
-
+    usePlacesQuery,
+    useBrowseDates,
+    useCurrenciesList
 }
