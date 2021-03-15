@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AirportSelect from './AirportSelect.js';
-import { usePlacesQuery } from '../custom_hooks/skyscannerAPI_hooks'
+import { useCurrenciesList, usePlacesQuery } from '../custom_hooks/skyscannerAPI_hooks'
 
 function FlightInfoForm(props) {
     // Values for origin
@@ -15,7 +15,7 @@ function FlightInfoForm(props) {
     const [showDestinations, setShowDestinations] = useState(false); // controls when destination-select screen is shown
     const [destinationSelected, setDestinationSelected] = useState(false); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
     
-    
+    const currenciesList = useCurrenciesList();
 
     function handleOrigin(e) {
         e.preventDefault();
@@ -57,7 +57,9 @@ function FlightInfoForm(props) {
         props.setInboundDate(e.target.value);
     }
 
-
+    function handleCurrency(e) {
+        props.setCurrency(e.target.value);
+    }
     return (
         <div className="FlightInfoTable">
             <form onSubmit={props.onSubmit}>
@@ -67,7 +69,6 @@ function FlightInfoForm(props) {
                     <label>
                         Search Origin: <input value={originQuery} onChange={handleOrigin}/>
                     </label>
-                    <button type="button" onClick={handleOrigin}>Submit</button>
                     {showOrigins ? <AirportSelect places={originPlaces} value={props.origin} onChange={handleOriginSelect}/> : <></>}
                 </div>
                 
@@ -77,7 +78,7 @@ function FlightInfoForm(props) {
                     <label>
                         Search Destination: <input value={destinationQuery} onChange={handleDestination}/>
                     </label>
-                    <button type="button" onClick={handleDestination}>Submit</button>
+                    
                     {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
                 </div>
 
@@ -93,6 +94,17 @@ function FlightInfoForm(props) {
                     <label>
                         Return Date: <input type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input> <i>(optional)</i>
                     </label>
+                </div>
+
+                {/* Currency Select Section */}
+                <div>
+                    <label>Choose Currency: </label>
+                    <select value={props.currency} onChange={handleCurrency}>
+                        <option>USD</option>
+                        {(currenciesList.length > 0) ? currenciesList.map((cur) => {
+                            return (<option key={cur.Code} value={cur.Code}>{cur.Code}</option>)
+                        }) : <></>}
+                    </select>
                 </div>
 
                 {/* Form Submit Button */}

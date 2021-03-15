@@ -8,12 +8,8 @@ function AirportSelect(props) {
             <select value={props.value} onChange={props.onChange}>
                 <option>-</option>
                 {props.places.map((place, index) => {
-                    
-                    return (
-                        <option key={index} value={place.PlaceId}>{place.PlaceName}</option>
-                    )
-                    
-                })
+                        return (<option key={index} value={place.PlaceId}>{place.PlaceName}</option>)
+                    })
                 }
             </select>
         </div>

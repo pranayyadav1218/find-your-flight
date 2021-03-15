@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 
 /*  All custom hooks relating to Skyscanner API calls
@@ -55,7 +55,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
         async function APICall() {
             let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/${currency}/en-US/${origin}/${destination}/${outboundDate}/${inboundDate}`,
                 options);
-            response = await response.json().then((response) => {
+            await response.json().then((response) => {
                 switch (responseId) {
                     case "Quotes":
                         setArr(response.Quotes);
@@ -81,7 +81,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
                         break;
                 }
                 setArr((state) => {
-                    result = state;
+                    //result = state;
                     return state;
                 });
             });
@@ -91,7 +91,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
             APICall();
         }
 
-    }, [origin, destination, outboundDate, inboundDate, currency]);
+    }, [responseId, origin, destination, outboundDate, inboundDate, currency]);
     //console.log(result);
     return result;
 }
