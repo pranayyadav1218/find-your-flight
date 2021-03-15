@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FlightInfoForm from './FlightInfoForm';
-import FlightsTable from './FlightsTable';
+import FlightsTable from './FlightsTable_components/FlightsTable';
 
 import { useBrowseDates } from '../custom_hooks/skyscannerAPI_hooks';
 
