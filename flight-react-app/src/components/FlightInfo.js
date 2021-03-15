@@ -20,7 +20,8 @@ function FlightInfo(props) {
     const currencies = useBrowseDates("Currencies", origin, destination, outboundDate, inboundDate, currency);
     const outboundDates = useBrowseDates("OutboundDates", destination, outboundDate, inboundDate, currency);
     const inboundDates = useBrowseDates("InboundDates", destination, outboundDate, inboundDate, currency);
-    const [inboundDateExists, setInboundDateExists] = useState(false);
+    
+
     // get a list of all supported currencies
     const currenciesList = useCurrenciesList();
 
@@ -68,10 +69,7 @@ function FlightInfo(props) {
         console.log(currencies);
         console.log(outboundDates);
         console.log(inboundDates);
-        if (inboundDate !== "" && inboundDate !== undefined) {
-            setInboundDateExists(true);
-            console.log(inboundDateExists);
-        }
+       
         //
         let bool = (quotes !== []);
         setShowTable(bool); 
@@ -86,7 +84,7 @@ function FlightInfo(props) {
                 inboundDate={inboundDate} setInboundDate={setInboundDate}
                 onSubmit={handleSubmit}>
             </FlightInfoForm>
-            {showTable ? <FlightsTable inboundDateExists={inboundDateExists} quotes={quotes} carriers={carriers} places={places} currencies={currencies} outboundDates={outboundDates} inboundDates={inboundDates}></FlightsTable> : <></>}
+            {showTable ? <FlightsTable quotes={quotes} carriers={carriers} places={places} currencies={currencies} outboundDates={outboundDates} inboundDates={inboundDates}></FlightsTable> : <></>}
         </div>
     )
 }

@@ -86,7 +86,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
                 });
             });
         } 
-        let allowAPICall = ((origin !== "" && destination !== "" ) && (origin !== undefined && destination !== undefined) && (currency !== undefined));
+        let allowAPICall = ((origin !== "" && destination !== "" ) && (origin !== undefined && destination !== undefined) && (currency !== undefined) && (origin !== "-" && destination !== "-"));
         if (allowAPICall) {
             APICall();
         }

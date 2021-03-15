@@ -33,16 +33,16 @@ function FlightInfoForm(props) {
 
 
     function handleOriginSelect(e) {
+        props.setOrigin(e.target.value);
         if (e.target.value !== "-") {
-            props.setOrigin(e.target.value);
             setOriginSelected(true);   
         }
         else
             setOriginSelected(false);
     }
     function handleDestinationSelect(e) {
+        props.setDestination(e.target.value);
         if (e.target.value !== "-") {
-            props.setDestination(e.target.value);
             setDestinationSelected(true);
         }
         else 
