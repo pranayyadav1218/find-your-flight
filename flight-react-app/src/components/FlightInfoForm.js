@@ -68,6 +68,7 @@ function FlightInfoForm(props) {
     }
 
     function handleCurrency(e) {
+        console.log(e.target.value);
         props.setCurrency(e.target.value);
     }
     return (
@@ -111,7 +112,7 @@ function FlightInfoForm(props) {
                     <label>Choose Currency: </label>
                     <select value={props.currency} onChange={handleCurrency}>
                         <option>USD</option>
-                        {(currenciesList.length > 0) ? currenciesList.map((cur) => {
+                        {(currenciesList !== undefined) ? currenciesList.map((cur) => {
                             return (<option key={cur.Code} value={cur.Code}>{cur.Code}</option>)
                         }) : <></>}
                     </select>

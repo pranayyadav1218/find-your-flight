@@ -6,7 +6,7 @@ function AirportSelect(props) {
    
     return (
         <div>
-            <label>Select Airport: </label>
+            <label><small>SELECT AIRPORT: </small></label>
             <select value={props.value} onChange={props.onChange}>
                 <option>-</option>
                 {props.places.map((place, index) => {

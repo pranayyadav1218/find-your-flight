@@ -42,7 +42,6 @@ function usePlacesQuery(query) {
 
 function useBrowseDates(responseId, origin, destination, outboundDate, inboundDate, currency) {
     const [arr, setArr] = useState([]);
-    let result = arr;
     // Only makes API call when there is a change to any of the function arguments AND when origin && destination are not empty strings
     useEffect(() => {
         const options =  {
@@ -119,7 +118,7 @@ function useCurrenciesList() {
     return list;
 }
 
-function useFlights(quotes, carriers, places, currencies) {
+function useFlights(quotes, carriers, places, currencies, sortLowToHigh, currentCurrency) {
     const [flightsArr, setFlightsArr] = useState([]);
     let result = [];
     useEffect(() => {
@@ -176,19 +175,85 @@ function useFlights(quotes, carriers, places, currencies) {
                 }
 
                 // Set price symbol and value
-                rowObject.PriceSymbol = ((currencies !== undefined && currencies[0] !== undefined) ? currencies[0].Symbol : "")
+                rowObject.PriceSymbol = ((currencies !== undefined && currencies[0] !== undefined) ? (currencies[0].Symbol.length === 1 ? currencies[0].Symbol : currencies[0].Symbol + " " ) : "")
                 rowObject.Price = quote.MinPrice;
-
+                console.log((rowObject.PriceSymbol))
                 // Add row object to array of rows
                 
                 result = result.concat([rowObject]);
                 setFlightsArr(result);
 
             })
+            if (!sortLowToHigh) // By default, the query sorts retrieves the quotes from low prices to high price, so only need to call sortFlights() when we want the opposite order
+                setFlightsArr(sortFlights(result, sortLowToHigh));
+
         }
-    }, [quotes]);
+        
+        
+    }, [quotes, carriers, places, currencies, sortLowToHigh, currentCurrency]);
+
     
+
     return flightsArr;
+}
+
+// Performs a mergesort on flights array based on Price
+function sortFlights(arr, sortLowToHigh) {
+    let sortBy = (sortLowToHigh ? 0 : 1);
+    let result = mergeSort(arr, sortBy);
+    console.log(result);
+    return result;
+}
+
+// merge function of mergesort
+function merge(left, right, sortBy) {
+    let arr = [];
+    //console.log("/////////////////")
+    //console.log("Merge: ")
+    //console.log(left)
+    //console.log(right)
+    while (left.length !== 0 && right.length !== 0) {
+        switch (sortBy) {
+            case 0: // sortLowToHigh is true: pop the row object with smaller price between left[0] and right[0]
+                if (left[0].Price < right[0].Price) {
+                    
+                    arr.push(left.shift());
+                }
+                else {
+                    arr.push(right.shift());
+                }
+                break;
+            case 1: // sortLowToHigh is false: pop the row object with greater price between left[0] and right[0]
+                if (left[0].Price > right[0].Price) {
+                    arr.push(left.shift());
+                }
+                else {
+                    arr.push(right.shift());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    
+    let result = [...arr, ...left, ...right];
+    //console.log("into: ")
+    //console.log(result)
+    //console.log("/////////////////")
+    return result;
+}
+
+// mergesort
+function mergeSort(arr, sortBy) {
+    
+    const half = arr.length / 2
+    if (arr.length < 2) { // Base case of mergesort
+        return arr;
+    }
+
+    const left = arr.splice(0, half); // divide array into two halves
+
+    return merge(mergeSort(left, sortBy), mergeSort(arr, sortBy), sortBy);
 }
 
 export {
