@@ -21,14 +21,24 @@ function FlightInfoForm(props) {
         e.preventDefault();
         
         setOriginQuery(e.target.value);
-        setShowOrigins(true);
+        if (e.target.value !== "") {
+            setShowOrigins(true);
+        }
+        else {
+            setShowOrigins(false);
+        }
     }
     
     function handleDestination(e) {
         e.preventDefault();
       
         setDestinationQuery(e.target.value);
-        setShowDestinations(true);
+        if (e.target.value !== "") {
+            setShowDestinations(true);
+        }
+        else {
+            setShowDestinations(false);
+        }
     }
 
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import FlightInfoForm from './FlightInfoForm';
-import FlightsTable from './FlightsTable_components/FlightsTable';
+import FlightTable from './FlightTable';
 
-import { useBrowseDates } from '../custom_hooks/skyscannerAPI_hooks';
+import { useBrowseDates, useFlights } from '../custom_hooks/skyscannerAPI_hooks';
 
 function FlightInfo() {
     /* Query information needed to make a call to the Skyscanner API */
@@ -20,6 +20,9 @@ function FlightInfo() {
     const currencies = useBrowseDates("Currencies", origin, destination, outboundDate, inboundDate, currency);
     const outboundDates = useBrowseDates("OutboundDates", destination, outboundDate, inboundDate, currency);
     const inboundDates = useBrowseDates("InboundDates", destination, outboundDate, inboundDate, currency);
+    
+    const allFlights = useFlights(quotes, carriers, places, currencies);
+
     
     /*
     // initialize and populate the flights list
@@ -65,11 +68,13 @@ function FlightInfo() {
         console.log(currencies);
         console.log(outboundDates);
         console.log(inboundDates);
-       
+        
         //
         let bool = (quotes !== []);
         setShowTable(bool); 
     }
+
+    
     
     return (
         <div>
@@ -81,7 +86,9 @@ function FlightInfo() {
                 currency={currency} setCurrency={setCurrency}
                 onSubmit={handleSubmit}>
             </FlightInfoForm>
-            {showTable ? <FlightsTable quotes={quotes} carriers={carriers} places={places} currencies={currencies} outboundDates={outboundDates} inboundDates={inboundDates}></FlightsTable> : <></>}
+            {/*showTable ? <FlightsTable quotes={quotes} carriers={carriers} places={places} currencies={currencies} outboundDates={outboundDates} inboundDates={inboundDates}></FlightsTable> : <></>*/}
+            
+            {showTable ? <FlightTable allFlights={allFlights}></FlightTable> : <></>}
         </div>
     )
 }
