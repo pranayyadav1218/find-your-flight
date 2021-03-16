@@ -75,7 +75,7 @@ function FlightInfo() {
                             </select> 
                         </>
             : <></>}
-            {showTable ? <FlightTable allFlights={allFlights}></FlightTable> : <></>}
+            {showTable ? <FlightTable allFlights={allFlights} sortLowToHigh={sortLowToHigh}></FlightTable> : <></>}
         </div>
     )
 }
