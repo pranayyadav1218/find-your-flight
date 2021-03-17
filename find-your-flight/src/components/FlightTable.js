@@ -15,7 +15,11 @@ function FlightTable(props) {
     
     return (
         <div>
-            {props.allFlights !== undefined ?
+            {props.allFlights !== undefined ? 
+            <>
+                <label>Sort by Price: </label>
+                
+
                 <table className='FlightTable'>
                 
                         <thead>
@@ -33,7 +37,14 @@ function FlightTable(props) {
                                     </>
                                 : <></>}
                                 <th className="RowItem">Direct Flight?</th>
-                                <th className="RowItem">Price</th>
+                                <th className="RowItem">
+                                    <label>Price </label>
+                                    <select onChange={props.handleSortSelect} style={{float: 'right'}}>
+                                        <option value={"true"}>Low to High</option>
+                                        <option value={"false"}>High to Low</option>
+                                    </select> 
+                                </th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +98,9 @@ function FlightTable(props) {
                         </tbody>
                     
                 </table>
+            </>
             : <p>No Flights Available</p> }
+           
         </div>
     )
 }

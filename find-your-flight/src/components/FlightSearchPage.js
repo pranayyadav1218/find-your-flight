@@ -71,15 +71,8 @@ function FlightSearchPage() {
                 currency={currency} setCurrency={setCurrency}
                 onSubmit={handleSubmit}>
             </FlightInfoForm>
-            {showTable ? <>
-                            <label>Sort by Price: </label>
-                            <select onChange={handleSortSelect}>
-                                <option value={"true"}>Low to High</option>
-                                <option value={"false"}>High to Low</option>
-                            </select> 
-                        </>
-            : <></>}
-            {showTable ? <FlightTable allFlights={allFlights} sortLowToHigh={sortLowToHigh}></FlightTable> : <></>}
+            
+            {showTable ? <FlightTable allFlights={allFlights} sortLowToHigh={sortLowToHigh} handleSortSelect={handleSortSelect}></FlightTable> : <></>}
             {(origin.length > 1 && destination.length > 1 && !showTable) ? <p>No Flights Available</p> : <></>}
         </div>
     )
