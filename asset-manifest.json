@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/find-your-flight/static/css/main.c3585bc4.chunk.css",
-    "main.js": "/find-your-flight/static/js/main.7eff94f5.chunk.js",
-    "main.js.map": "/find-your-flight/static/js/main.7eff94f5.chunk.js.map",
-    "runtime-main.js": "/find-your-flight/static/js/runtime-main.1749c74b.js",
-    "runtime-main.js.map": "/find-your-flight/static/js/runtime-main.1749c74b.js.map",
-    "static/js/2.5ff115e8.chunk.js": "/find-your-flight/static/js/2.5ff115e8.chunk.js",
-    "static/js/2.5ff115e8.chunk.js.map": "/find-your-flight/static/js/2.5ff115e8.chunk.js.map",
-    "static/js/3.b3a18e7f.chunk.js": "/find-your-flight/static/js/3.b3a18e7f.chunk.js",
-    "static/js/3.b3a18e7f.chunk.js.map": "/find-your-flight/static/js/3.b3a18e7f.chunk.js.map",
+    "main.css": "/find-your-flight/static/css/main.668be2a0.chunk.css",
+    "main.js": "/find-your-flight/static/js/main.5da8dc8c.chunk.js",
+    "main.js.map": "/find-your-flight/static/js/main.5da8dc8c.chunk.js.map",
+    "runtime-main.js": "/find-your-flight/static/js/runtime-main.c37c520e.js",
+    "runtime-main.js.map": "/find-your-flight/static/js/runtime-main.c37c520e.js.map",
+    "static/js/2.52decd2e.chunk.js": "/find-your-flight/static/js/2.52decd2e.chunk.js",
+    "static/js/2.52decd2e.chunk.js.map": "/find-your-flight/static/js/2.52decd2e.chunk.js.map",
+    "static/js/3.2082f02b.chunk.js": "/find-your-flight/static/js/3.2082f02b.chunk.js",
+    "static/js/3.2082f02b.chunk.js.map": "/find-your-flight/static/js/3.2082f02b.chunk.js.map",
     "index.html": "/find-your-flight/index.html",
-    "static/css/main.c3585bc4.chunk.css.map": "/find-your-flight/static/css/main.c3585bc4.chunk.css.map",
-    "static/js/2.5ff115e8.chunk.js.LICENSE.txt": "/find-your-flight/static/js/2.5ff115e8.chunk.js.LICENSE.txt",
+    "static/css/main.668be2a0.chunk.css.map": "/find-your-flight/static/css/main.668be2a0.chunk.css.map",
+    "static/js/2.52decd2e.chunk.js.LICENSE.txt": "/find-your-flight/static/js/2.52decd2e.chunk.js.LICENSE.txt",
     "static/media/App.css": "/find-your-flight/static/media/background-3104413_1920.0464304d.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.1749c74b.js",
-    "static/js/2.5ff115e8.chunk.js",
-    "static/css/main.c3585bc4.chunk.css",
-    "static/js/main.7eff94f5.chunk.js"
+    "static/js/runtime-main.c37c520e.js",
+    "static/js/2.52decd2e.chunk.js",
+    "static/css/main.668be2a0.chunk.css",
+    "static/js/main.5da8dc8c.chunk.js"
   ]
 }
