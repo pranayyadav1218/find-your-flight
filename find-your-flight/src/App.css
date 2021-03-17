@@ -2,12 +2,15 @@
   text-align: center;
   justify-content: center;
   align-items: center;
-  
-  
+  width: auto;
+  height: auto;
+  min-height: 100vh;
+  background-color: whitesmoke;
+ 
+  overflow-x: hidden;
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -16,10 +19,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
   background-image: url('./background-3104413_1920.jpg');
+  min-width: 100vw;
+  margin-bottom: 10px;
 }
 
 .App-footer {
-  background-color: #282c34;
   max-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -31,4 +35,5 @@
   bottom: 0;
   width: 100vw;
   background-image: url('./background-3104413_1920.jpg');
+  margin-top: 10px;
 }

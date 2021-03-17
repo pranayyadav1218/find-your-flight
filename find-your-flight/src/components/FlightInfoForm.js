@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AirportSelect from './AirportSelect.js';
-import { useCurrenciesList, usePlacesQuery } from '../custom_hooks/skyscannerAPI_hooks'
+import { useCurrenciesList, usePlacesQuery } from '../custom_hooks/skyscannerAPI_hooks';
+import './FlightInfoForm.css';
 
 function FlightInfoForm(props) {
     // Values for origin
@@ -85,42 +86,40 @@ function FlightInfoForm(props) {
         <div className="FlightInfoForm">
             <form onSubmit={props.onSubmit}> 
                 {/* Section for Origin */}
-                <div>
+                <div className="InputArea">
                     <label>
-                        Search Origin: <input value={originQuery} onChange={handleOrigin}/>
+                        Search Origin: <input className="InputField" value={originQuery} onChange={handleOrigin}/>
                     </label>
                     {showOrigins ? <AirportSelect places={originPlaces} value={props.origin} onChange={handleOriginSelect}/> : <></>}
                 </div>
                 
 
                 {/* Section for Destination */}
-                <div>
+                <div className="InputArea">
                     <label>
-                        Search Destination: <input value={destinationQuery} onChange={handleDestination}/>
+                        Search Destination: <input className="InputField" value={destinationQuery} onChange={handleDestination}/>
                         {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
                     </label>
-                    
-                    
                 </div>
 
                 {/* Outbound Date Section */}
-                <div>
+                <div className="InputArea">
                     <label>
-                        Departure Date: <input type="date" value={props.outboundDate} min={today} max={props.inboundDate} onChange={handleOutboundDate}></input> <i>(optional)</i>
+                        Departure Date: <input className="InputField" type="date" value={props.outboundDate} min={today} max={props.inboundDate} onChange={handleOutboundDate}></input> <i>(optional)</i>
                     </label>
                 </div>
 
                 {/* Inbound Date Section */}
-                <div>
+                <div className="InputArea">
                     <label>
-                        Return Date: <input type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input> <i>(optional)</i>
+                        Return Date: <input className="InputField" type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input> <i>(optional)</i>
                     </label>
                 </div>
 
                 {/* Currency Select Section */}
-                <div>
+                <div className="InputArea">
                     <label>Choose Currency: </label>
-                    <select value={props.currency} onChange={handleCurrency}>
+                    <select className="InputField" value={props.currency} onChange={handleCurrency}>
                         <option>USD</option>
                         {(currenciesList !== undefined) ? currenciesList.map((cur) => {
                             return (<option key={cur.Code} value={cur.Code}>{cur.Code}</option>)
