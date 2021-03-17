@@ -4,7 +4,7 @@ import FlightTable from './FlightTable';
 
 import { useBrowseDates, useFlights } from '../custom_hooks/skyscannerAPI_hooks';
 
-function FlightInfo() {
+function FlightSearchPage() {
     /* Query information needed to make a call to the Skyscanner API */
     const [origin, setOrigin] = useState("");
     const [destination, setDestination] = useState("");
@@ -22,8 +22,11 @@ function FlightInfo() {
     //const outboundDates = useBrowseDates("OutboundDates", destination, outboundDate, inboundDate, currency);
     //const inboundDates = useBrowseDates("InboundDates", destination, outboundDate, inboundDate, currency);
     
+    /* Custom hook returns a sorted array of objects with the information that 
+        needs to be displayed (each object represents a quote and 1 row in the table) */
     const allFlights = useFlights(quotes, carriers, places, currencies, sortLowToHigh, currency);
 
+    /* useEffect that updates whether or not to show the table based on changes to the quotes array */
     useEffect(() => {
         if (quotes === [] || quotes === undefined || quotes.length === 0) {
             setShowTable(false);
@@ -82,4 +85,4 @@ function FlightInfo() {
     )
 }
 
-export default FlightInfo
+export default FlightSearchPage

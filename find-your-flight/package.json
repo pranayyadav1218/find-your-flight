@@ -1,5 +1,6 @@
 {
-  "name": "flight-react-app",
+  "name": "find-your-flight",
+  "homepage": "https://pyadav1218.github.io/find-your-flight",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

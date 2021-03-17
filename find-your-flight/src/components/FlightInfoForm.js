@@ -7,12 +7,12 @@ function FlightInfoForm(props) {
     const [originQuery, setOriginQuery] = useState(""); // query to use when fetching origins places
     const [showOrigins, setShowOrigins] = useState(false); // controls when origin-select screen is shown
     const originPlaces = usePlacesQuery(originQuery); // Places list for origins, value is retrieved from a custom hook
-    const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
+    //const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
     
     const [destinationQuery, setDestinationQuery] = useState(""); // query to use when fetching destinations
     const destinationPlaces = usePlacesQuery(destinationQuery); // Places list for destinations, value retrieved from custom hook
     const [showDestinations, setShowDestinations] = useState(false); // controls when destination-select screen is shown
-    const [destinationSelected, setDestinationSelected] = useState(false); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
+    //const [destinationSelected, setDestinationSelected] = useState(false); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
     
     const currenciesList = useCurrenciesList();
 
@@ -43,19 +43,23 @@ function FlightInfoForm(props) {
 
     function handleOriginSelect(e) {
         props.setOrigin(e.target.value);
+        /*
         if (e.target.value !== "-") {
             setOriginSelected(true);   
         }
         else
             setOriginSelected(false);
+            */
     }
     function handleDestinationSelect(e) {
         props.setDestination(e.target.value);
+        /*
         if (e.target.value !== "-") {
             setDestinationSelected(true);
         }
         else 
             setDestinationSelected(false);
+            */
     }
 
     function handleOutboundDate(e) {

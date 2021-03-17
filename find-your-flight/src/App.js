@@ -1,5 +1,5 @@
 import './App.css';
-import FlightInfo from './components/FlightInfo.js';
+import FlightSearchPage from './components/FlightSearchPage.js';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
         <p>Find <i>your</i> Flight!</p>
       </div>
       <div>
-        <FlightInfo></FlightInfo>
+        <FlightSearchPage></FlightSearchPage>
       </div>
       <div className="App-footer">
         <p>Made by Pranay Yadav using the Skyscanner API, March 2021</p>

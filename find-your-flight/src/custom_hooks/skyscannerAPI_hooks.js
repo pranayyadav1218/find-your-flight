@@ -52,7 +52,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
         };
         async function APICall() {
             let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/${currency}/en-US/${origin}/${destination}/${outboundDate}/${inboundDate}`,
-                options);
+                options).catch(err => {console.log("ERROR: " + err)});
             await response.json().then((response) => {
                 switch (responseId) {
                     case "Quotes":
