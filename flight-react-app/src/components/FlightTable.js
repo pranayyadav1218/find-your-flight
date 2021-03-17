@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import './FlightTable.css';
 
 function FlightTable(props) {
 
@@ -6,9 +7,9 @@ function FlightTable(props) {
     console.log(flights)
     
     return (
-        <div>
-            <hr/>
-                <ol>
+        <div className='FlightTable'>
+            
+                
                     {props.allFlights !== undefined ? 
                         props.allFlights.map((row, index) => {
                             let style = {backgroundColor: ''}
@@ -20,25 +21,30 @@ function FlightTable(props) {
                             }
 
                             return (
-                                <li key={index} style={style}>
-                                    {row.OutboundCarrier + " | "}
-                                    {row.OutboundOrigin + " | "}
-                                    {row.OutboundDestination + " | "}
-                                    {row.OutboundDepartureDate + " | "}
+                                <>
+                                    <text key={index} style={style} className='TableRow'>
+                                        <text className='RowItem'>{row.OutboundCarrier + " | "}</text>
+                                        <text className='RowItem'>{row.OutboundOrigin + " | "}</text>
+                                        <text className='RowItem'>{row.OutboundDestination + " | "}</text>
+                                        <text className='RowItem'>{row.OutboundDepartureDate + " | "}</text>
+                                    </text>
+                                    
                                     {row.InboundCarrier !== "" ? 
-                                        <>
-                                            {row.InboundCarrier + " | "}
-                                            {row.InboundOrigin + " | "}
-                                            {row.InboundDestination + " | "}
-                                            {row.InboundDepartureDate + " | "}
-                                        </>
-                                    : ""}
-                                    {row.PriceSymbol + "" + row.Price}
-                                </li>
+                                            <text key={index + 10000} style={style} className='TableRow'>
+                                                <text className='RowItem'>{row.InboundCarrier + " | "}</text>
+                                                <text className='RowItem'>{row.InboundOrigin + " | "}</text>
+                                                <text className='RowItem'>{row.InboundDestination + " | "}</text>
+                                                <text className='RowItem'>{row.InboundDepartureDate + " | "}</text>
+                                                <text className='RowItem'>{row.PriceSymbol + "" + row.Price}</text>
+                                            </text>
+                                        : <text className='RowItem'>{row.PriceSymbol + "" + row.Price}</text>}
+                                    
+                                    
+                                </>
                             )
                         })
                     : <></>}
-                </ol>
+               
             <hr/>
         </div>
     )

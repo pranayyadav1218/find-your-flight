@@ -6,9 +6,9 @@ function AirportSelect(props) {
    
     return (
         <div>
-            <label><small>SELECT AIRPORT: </small></label>
+            <label><small>Select Airport <i>(required)</i>: </small></label>
             <select value={props.value} onChange={props.onChange}>
-                <option>-</option>
+                <option value='-'>-</option>
                 {props.places.map((place, index) => {
                         return (<option key={index} value={place.PlaceId}>{place.PlaceName}</option>)
                     })
