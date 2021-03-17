@@ -1,23 +1,35 @@
 .FlightTable {
-    display: grid;
     padding: 0px;
-    list-style-type: none;
-    grid-template-columns: 'TableRow TableRow';
-    width: 100vw;
-    text-align: center;
+    width: 90vw;
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 10px;
 }
 
-.TableRow {
-    display: grid;
-    border: 3px solid green;
-    grid-template-columns: auto;
+.TableHead {
+    background-color: #393f50;
+    border: 3px solid black;
+    color: white;
+    margin: auto;
+}
+
+.TableRow:nth-child(even) {
+    background-color: aliceblue;
+    margin: auto;
+    border: 3px solid black;
+}
+.TableRow:nth-child(odd) {
+    background-color:rgba(240, 248, 255, 0.24);
+    margin: auto;
+    border: 3px solid black;
 }
 
 .RowItem {
     text-align: left;
-    border: 2px solid red;
+    border: 1px solid black;
     width: 10vw;
     padding: 5px;
+    margin: auto;
 }
 
 

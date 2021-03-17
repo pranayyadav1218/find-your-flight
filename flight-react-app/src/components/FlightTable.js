@@ -1,51 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './FlightTable.css';
 
 function FlightTable(props) {
-
-    const flights = props.allFlights;
-    console.log(flights)
+    const [hasInboundFlights, setHasInboundFlights] = useState(false);
+    useEffect(() => {
+        setHasInboundFlights(false);
+        props.allFlights.forEach((row) => {
+            if (row.InboundCarrier !== "") {
+                setHasInboundFlights(true);
+            }
+            return;
+        });
+    }, [props.allFlights])
     
     return (
-        <div className='FlightTable'>
-            
+        <div>
+            {props.allFlights !== undefined ?
+                <table className='FlightTable'>
                 
-                    {props.allFlights !== undefined ? 
-                        props.allFlights.map((row, index) => {
-                            let style = {backgroundColor: ''}
-                            if (props.sortLowToHigh) {
-                                style.backgroundColor = (index === 0 ? 'Cornsilk' : '');
-                            }
-                            else {
-                                style.backgroundColor = (index === (props.allFlights.length-1) ? 'Cornsilk' : '');
-                            }
+                        <thead>
+                            <tr className="TableHead">
+                                <th className="RowItem">Outbound Flight</th>
+                                <th className="RowItem">Origin</th>
+                                <th className="RowItem">Destination</th>
+                                <th className="RowItem">Departure Date</th>
+                                {hasInboundFlights ? 
+                                    <>
+                                        <th className="RowItem">Inbound Flight</th>
+                                        <th className="RowItem">Origin</th>
+                                        <th className="RowItem">Destination</th>
+                                        <th className="RowItem">Departure Date</th>
+                                    </>
+                                : <></>}
 
-                            return (
-                                <>
-                                    <text key={index} style={style} className='TableRow'>
-                                        <text className='RowItem'>{row.OutboundCarrier + " | "}</text>
-                                        <text className='RowItem'>{row.OutboundOrigin + " | "}</text>
-                                        <text className='RowItem'>{row.OutboundDestination + " | "}</text>
-                                        <text className='RowItem'>{row.OutboundDepartureDate + " | "}</text>
-                                    </text>
+                                <th className="RowItem">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        
+                        
+                            {props.allFlights.map((row, index) => {
+                                let style = {
+                                        backgroundColor: '',
+                                        border: '',
+                                    }
+
+                                // Highlight the cheapest flight using CSS styling
+                                if (props.sortLowToHigh && index === 0) {
+                                    style = {
+                                        backgroundColor: 'antiquewhite',
+                                        border: '4px solid limegreen',
+                                    }
+                                }
+                                else if (!props.sortLowToHigh && index === (props.allFlights.length-1)) {
+                                    style = {
+                                        backgroundColor: 'yellow',
+                                        border: '3px solid green',
+                                    }
+                                }
+
+                                return (
+                                    <tr key={index} className="TableRow" style={style}>
+                                        
+                                        <td className='RowItem'>{row.OutboundCarrier }</td>
+                                        <td className='RowItem'>{row.OutboundOrigin }</td>
+                                        <td className='RowItem'>{row.OutboundDestination }</td>
+                                        <td className='RowItem'>{row.OutboundDepartureDate }</td>
                                     
-                                    {row.InboundCarrier !== "" ? 
-                                            <text key={index + 10000} style={style} className='TableRow'>
-                                                <text className='RowItem'>{row.InboundCarrier + " | "}</text>
-                                                <text className='RowItem'>{row.InboundOrigin + " | "}</text>
-                                                <text className='RowItem'>{row.InboundDestination + " | "}</text>
-                                                <text className='RowItem'>{row.InboundDepartureDate + " | "}</text>
-                                                <text className='RowItem'>{row.PriceSymbol + "" + row.Price}</text>
-                                            </text>
-                                        : <text className='RowItem'>{row.PriceSymbol + "" + row.Price}</text>}
-                                    
-                                    
-                                </>
-                            )
-                        })
-                    : <></>}
-               
-            <hr/>
+                                        
+                                        {hasInboundFlights ? 
+                                            <>
+                                                <td className='RowItem'>{row.InboundCarrier }</td>
+                                                <td className='RowItem'>{row.InboundOrigin }</td>
+                                                <td className='RowItem'>{row.InboundDestination }</td>
+                                                <td className='RowItem'>{row.InboundDepartureDate }</td>
+                                                    
+                                            </>
+                                        : <></>}
+
+                                        <td className='RowItem'>{row.PriceSymbol + "" + row.Price}</td>
+                                        
+                                    </tr>
+                                )
+                            })}
+                            
+                        </tbody>
+                    
+                </table>
+            : <p>No Flights Available</p> }
         </div>
     )
 }

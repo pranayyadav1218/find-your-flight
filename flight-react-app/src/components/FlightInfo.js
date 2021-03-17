@@ -51,10 +51,6 @@ function FlightInfo() {
         }
     }
         
-    function handleCurrencySelect(e) {
-        setCurrency(e.target.value);
-        setSortLowToHigh(!sortLowToHigh);
-    }
 
     return (
         <div>

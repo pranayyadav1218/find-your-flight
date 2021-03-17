@@ -8,7 +8,6 @@ function FlightInfoForm(props) {
     const [showOrigins, setShowOrigins] = useState(false); // controls when origin-select screen is shown
     const originPlaces = usePlacesQuery(originQuery); // Places list for origins, value is retrieved from a custom hook
     const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
-
     
     const [destinationQuery, setDestinationQuery] = useState(""); // query to use when fetching destinations
     const destinationPlaces = usePlacesQuery(destinationQuery); // Places list for destinations, value retrieved from custom hook
@@ -60,7 +59,12 @@ function FlightInfoForm(props) {
     }
 
     function handleOutboundDate(e) {
-        props.setOutboundDate(e.target.value);
+        if (e.target.value !== "") {
+            props.setOutboundDate(e.target.value);
+        }
+        else {
+            props.setOutboundDate("anytime");
+        }
     }
 
     function handleInboundDate(e) {
@@ -71,6 +75,9 @@ function FlightInfoForm(props) {
         console.log(e.target.value);
         props.setCurrency(e.target.value);
     }
+
+    let today = new Date().toISOString().substring(0, 10);
+
     return (
         <div className="FlightInfoTable">
             <form onSubmit={props.onSubmit}>
@@ -96,7 +103,7 @@ function FlightInfoForm(props) {
                 {/* Outbound Date Section */}
                 <div>
                     <label>
-                        Departure Date: <input type="date" value={props.outboundDate} onChange={handleOutboundDate}></input> <i>(optional)</i>
+                        Departure Date: <input type="date" value={props.outboundDate} min={today} onChange={handleOutboundDate}></input> <i>(optional)</i>
                     </label>
                 </div>
 

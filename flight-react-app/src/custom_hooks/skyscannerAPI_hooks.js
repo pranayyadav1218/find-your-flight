@@ -85,7 +85,10 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
                 });
             });
         } 
-        let allowAPICall = ((origin !== "" && destination !== "" ) && (origin !== undefined && destination !== undefined) && (currency !== undefined) && (origin !== "-" && destination !== "-"));
+        let allowAPICall = ((origin !== "" && destination !== "" ) && (origin !== undefined && destination !== undefined) 
+                                && (currency !== undefined) && (origin !== "-" && destination !== "-") 
+                                && (outboundDate.length === 10 || outboundDate === "anytime"));
+
         if (allowAPICall) {
             APICall();
         }
@@ -97,7 +100,6 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
 
 function useCurrenciesList() {
     const [list, setList] = useState([]);
-    let result = list;
     useEffect(()=> {
         const options =  {
             "method": "GET",
@@ -120,9 +122,11 @@ function useCurrenciesList() {
 
 function useFlights(quotes, carriers, places, currencies, sortLowToHigh, currentCurrency) {
     const [flightsArr, setFlightsArr] = useState([]);
-    let result = [];
     useEffect(() => {
         if (quotes !== undefined) {
+
+            let result = [];
+            
             quotes.forEach(quote => {
                 
                 let rowObject = {
@@ -138,46 +142,52 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, current
                     Price: "",
                 };
 
+
                 // Set all carrier names
-                carriers.forEach(carrier => {
-                    if (carrier.CarrierId === quote.OutboundLeg.CarrierIds[0]) {
-                        rowObject.OutboundCarrier = carrier.Name;
-                    }
-                    if (quote.InboundLeg !== undefined) {
-                        if (carrier.CarrierId === quote.InboundLeg.CarrierIds[0]) {
-                            rowObject.InboundCarrier = carrier.Name;
+                if (carriers !== undefined) {
+                    carriers.forEach(carrier => {
+                        if (carrier.CarrierId === quote.OutboundLeg.CarrierIds[0]) {
+                            rowObject.OutboundCarrier = carrier.Name;
                         }
-                    }
-                });
+                        if (quote.InboundLeg !== undefined) {
+                            if (carrier.CarrierId === quote.InboundLeg.CarrierIds[0]) {
+                                rowObject.InboundCarrier = carrier.Name;
+                            }
+                        }
+                    });
+                }
 
                 // Set all origin/destination names
-                places.forEach(place => {
-                    if (place.PlaceId === quote.OutboundLeg.OriginId) {
-                        rowObject.OutboundOrigin = place.Name;
-                    }
-                    if (place.PlaceId === quote.OutboundLeg.DestinationId) {
-                        rowObject.OutboundDestination = place.Name;
-                    }
-                    if (quote.InboundLeg !== undefined) {
-                        if (place.PlaceId === quote.InboundLeg.OriginId) {
-                            rowObject.InboundOrigin = place.Name;
+                if (places !== undefined) {
+                    places.forEach(place => {
+                        if (place.PlaceId === quote.OutboundLeg.OriginId) {
+                            rowObject.OutboundOrigin = place.Name;
                         }
-                        if (place.PlaceId === quote.InboundLeg.DestinationId) {
-                            rowObject.InboundDestination = place.Name;
+                        if (place.PlaceId === quote.OutboundLeg.DestinationId) {
+                            rowObject.OutboundDestination = place.Name;
                         }
-                    }
-                });
+                        if (quote.InboundLeg !== undefined) {
+                            if (place.PlaceId === quote.InboundLeg.OriginId) {
+                                rowObject.InboundOrigin = place.Name;
+                            }
+                            if (place.PlaceId === quote.InboundLeg.DestinationId) {
+                                rowObject.InboundDestination = place.Name;
+                            }
+                        }
+                    });
+                }
 
                 // Set departure dates
-                rowObject.OutboundDepartureDate = quote.OutboundLeg.DepartureDate.substring(0, 10);
+                if (quote.OutboundLeg !== undefined) {
+                    rowObject.OutboundDepartureDate = quote.OutboundLeg.DepartureDate.substring(0, 10);
+                }
                 if (quote.InboundLeg !== undefined) {
                     rowObject.InboundDepartureDate = quote.InboundLeg.DepartureDate.substring(0, 10);
                 }
 
                 // Set price symbol and value
                 rowObject.PriceSymbol = ((currencies !== undefined && currencies[0] !== undefined) ? (currencies[0].Symbol.length === 1 ? currencies[0].Symbol : currencies[0].Symbol + " " ) : "")
-                rowObject.Price = quote.MinPrice;
-                console.log((rowObject.PriceSymbol))
+                rowObject.Price = (quote.MinPrice !== undefined ? quote.MinPrice : "");
                 // Add row object to array of rows
                 
                 result = result.concat([rowObject]);
