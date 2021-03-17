@@ -21,14 +21,14 @@ function FlightTable(props) {
                         <thead>
                             <tr className="TableHead">
                                 <th className="RowItem">Outbound Flight</th>
-                                <th className="RowItem">Origin</th>
-                                <th className="RowItem">Destination</th>
+                                <th className="RowItem">From</th>
+                                <th className="RowItem">To</th>
                                 <th className="RowItem">Departure Date</th>
                                 {hasInboundFlights ? 
                                     <>
-                                        <th className="RowItem">Inbound Flight</th>
-                                        <th className="RowItem">Origin</th>
-                                        <th className="RowItem">Destination</th>
+                                        <th className="RowItem">Return Flight</th>
+                                        <th className="RowItem">From</th>
+                                        <th className="RowItem">To</th>
                                         <th className="RowItem">Departure Date</th>
                                     </>
                                 : <></>}

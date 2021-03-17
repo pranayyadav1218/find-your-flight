@@ -93,19 +93,20 @@ function FlightInfoForm(props) {
                 <div>
                     <label>
                         Search Destination: <input value={destinationQuery} onChange={handleDestination}/>
+                        {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
                     </label>
                     
-                    {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
+                    
                 </div>
 
                 {/* Outbound Date Section */}
                 <div>
                     <label>
-                        Departure Date: <input type="date" value={props.outboundDate} min={today} onChange={handleOutboundDate}></input> <i>(optional)</i>
+                        Departure Date: <input type="date" value={props.outboundDate} min={today} max={props.inboundDate} onChange={handleOutboundDate}></input> <i>(optional)</i>
                     </label>
                 </div>
 
-                {/* Outbound Date Section */}
+                {/* Inbound Date Section */}
                 <div>
                     <label>
                         Return Date: <input type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input> <i>(optional)</i>
@@ -123,8 +124,10 @@ function FlightInfoForm(props) {
                     </select>
                 </div>
 
-                {/* Form Submit Button */}
-                <button disabled={!(destinationSelected && originSelected)}>Find Flights!</button>
+                {/* Form Submit Button 
+                    <button disabled={!(destinationSelected && originSelected)}>Find Flights!</button>
+                */}
+                
             </form>
         </div>
     )

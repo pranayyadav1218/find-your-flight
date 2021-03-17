@@ -2,6 +2,8 @@
   text-align: center;
   justify-content: center;
   align-items: center;
+  
+  
 }
 
 .App-header {
@@ -13,6 +15,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  background-image: url('./background-3104413_1920.jpg');
 }
 
 .App-footer {
@@ -27,4 +30,5 @@
   position: fixed;
   bottom: 0;
   width: 100vw;
+  background-image: url('./background-3104413_1920.jpg');
 }
