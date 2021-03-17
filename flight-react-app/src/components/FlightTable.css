@@ -11,6 +11,7 @@
     border: 3px solid black;
     color: white;
     margin: auto;
+  
 }
 
 .TableRow:nth-child(even) {

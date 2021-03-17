@@ -92,9 +92,14 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
         if (allowAPICall) {
             APICall();
         }
+        else {
+            setArr([]);
+        }
 
     }, [responseId, origin, destination, outboundDate, inboundDate, currency]);
-    //console.log(result);
+    if (responseId==="Quotes") {
+        console.log(arr);
+    }
     return arr;
 }
 
@@ -126,7 +131,7 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, current
         if (quotes !== undefined) {
 
             let result = [];
-            
+
             quotes.forEach(quote => {
                 
                 let rowObject = {
@@ -140,6 +145,7 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, current
                     InboundDepartureDate: "",
                     PriceSymbol: "",
                     Price: "",
+                    Direct: "",
                 };
 
 
@@ -180,6 +186,7 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, current
                 // Set departure dates
                 if (quote.OutboundLeg !== undefined) {
                     rowObject.OutboundDepartureDate = quote.OutboundLeg.DepartureDate.substring(0, 10);
+                    rowObject.Direct = (quote.Direct ? "Yes" : "No");
                 }
                 if (quote.InboundLeg !== undefined) {
                     rowObject.InboundDepartureDate = quote.InboundLeg.DepartureDate.substring(0, 10);

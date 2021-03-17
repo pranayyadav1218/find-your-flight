@@ -79,9 +79,8 @@ function FlightInfoForm(props) {
     let today = new Date().toISOString().substring(0, 10);
 
     return (
-        <div className="FlightInfoTable">
-            <form onSubmit={props.onSubmit}>
-            
+        <div className="FlightInfoForm">
+            <form onSubmit={props.onSubmit}> 
                 {/* Section for Origin */}
                 <div>
                     <label>

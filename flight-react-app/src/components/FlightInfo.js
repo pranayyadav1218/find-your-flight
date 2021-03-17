@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FlightInfoForm from './FlightInfoForm';
 import FlightTable from './FlightTable';
 
@@ -24,21 +24,36 @@ function FlightInfo() {
     
     const allFlights = useFlights(quotes, carriers, places, currencies, sortLowToHigh, currency);
 
+    useEffect(() => {
+        if (quotes === [] || quotes === undefined || quotes.length === 0) {
+            setShowTable(false);
+        }
+        else {
+            setShowTable(true);
+        }
+    }, [quotes]);
 
     function handleSubmit(e) {
         e.preventDefault();
         // Debugging
         console.log(origin + " to " + destination + " from " + outboundDate + " to " + inboundDate);
-        console.log(quotes);
-        console.log(places);
-        console.log(carriers);
-        console.log(currencies);
+        //console.log(quotes);
+        //console.log(places);
+        //console.log(carriers);
+        //console.log(currencies);
         //console.log(outboundDates);
         //console.log(inboundDates);
         
         //
-        let bool = (quotes !== []);
+        let bool = (quotes !== [] && quotes !== undefined && carriers !== [] && carriers !== undefined && places !== [] && places !== undefined && quotes.length !== 0);
         setShowTable(bool); 
+    }
+
+    function onChange(e) {
+        let bool = (quotes !== [] && quotes !== undefined && carriers !== [] && carriers !== undefined && places !== [] && places !== undefined && quotes.length !== 0);
+        setShowTable(bool); 
+        console.log(bool);
+        console.log(quotes);
     }
 
     
@@ -62,7 +77,6 @@ function FlightInfo() {
                 currency={currency} setCurrency={setCurrency}
                 onSubmit={handleSubmit}>
             </FlightInfoForm>
-            {/*showTable ? <FlightsTable quotes={quotes} carriers={carriers} places={places} currencies={currencies} outboundDates={outboundDates} inboundDates={inboundDates}></FlightsTable> : <></>*/}
             {showTable ? <>
                             <label>Sort by Price: </label>
                             <select onChange={handleSortSelect}>
@@ -72,6 +86,7 @@ function FlightInfo() {
                         </>
             : <></>}
             {showTable ? <FlightTable allFlights={allFlights} sortLowToHigh={sortLowToHigh}></FlightTable> : <></>}
+            {(origin.length > 1 && destination.length > 1 && !showTable) ? <p>No Flights Available</p> : <></>}
         </div>
     )
 }

@@ -32,7 +32,7 @@ function FlightTable(props) {
                                         <th className="RowItem">Departure Date</th>
                                     </>
                                 : <></>}
-
+                                <th className="RowItem">Direct Flight?</th>
                                 <th className="RowItem">Price</th>
                             </tr>
                         </thead>
@@ -54,8 +54,8 @@ function FlightTable(props) {
                                 }
                                 else if (!props.sortLowToHigh && index === (props.allFlights.length-1)) {
                                     style = {
-                                        backgroundColor: 'yellow',
-                                        border: '3px solid green',
+                                        backgroundColor: 'antiquewhite',
+                                        border: '4px solid limegreen',
                                     }
                                 }
 
@@ -77,7 +77,7 @@ function FlightTable(props) {
                                                     
                                             </>
                                         : <></>}
-
+                                        <td className="RowItem">{row.Direct}</td>
                                         <td className='RowItem'>{row.PriceSymbol + "" + row.Price}</td>
                                         
                                     </tr>
