@@ -5,10 +5,13 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        Find a flight!
+        <p>Find <i>your</i> Flight!</p>
       </div>
       <div>
         <FlightInfo></FlightInfo>
+      </div>
+      <div className="App-footer">
+        <p>Made by Pranay Yadav using the Skyscanner API, March 2021</p>
       </div>
     </div>
     
