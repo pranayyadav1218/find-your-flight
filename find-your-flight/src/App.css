@@ -1,0 +1,39 @@
+.App {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  min-height: 100vh;
+  background-color: whitesmoke;
+ 
+  overflow-x: hidden;
+}
+
+.App-header {
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-image: url('./background-3104413_1920.jpg');
+  min-width: 100vw;
+  margin-bottom: 10px;
+}
+
+.App-footer {
+  max-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.5vmin;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-image: url('./background-3104413_1920.jpg');
+  margin-top: 10px;
+}
