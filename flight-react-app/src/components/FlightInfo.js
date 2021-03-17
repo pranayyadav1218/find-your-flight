@@ -36,7 +36,7 @@ function FlightInfo() {
     function handleSubmit(e) {
         e.preventDefault();
         // Debugging
-        console.log(origin + " to " + destination + " from " + outboundDate + " to " + inboundDate);
+        //console.log(origin + " to " + destination + " from " + outboundDate + " to " + inboundDate);
         //console.log(quotes);
         //console.log(places);
         //console.log(carriers);
@@ -48,14 +48,6 @@ function FlightInfo() {
         let bool = (quotes !== [] && quotes !== undefined && carriers !== [] && carriers !== undefined && places !== [] && places !== undefined && quotes.length !== 0);
         setShowTable(bool); 
     }
-
-    function onChange(e) {
-        let bool = (quotes !== [] && quotes !== undefined && carriers !== [] && carriers !== undefined && places !== [] && places !== undefined && quotes.length !== 0);
-        setShowTable(bool); 
-        console.log(bool);
-        console.log(quotes);
-    }
-
     
     function handleSortSelect(e) {
         if (e.target.value === "true") {
@@ -65,7 +57,6 @@ function FlightInfo() {
             setSortLowToHigh(false);
         }
     }
-        
 
     return (
         <div>

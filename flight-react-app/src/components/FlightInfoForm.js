@@ -72,7 +72,6 @@ function FlightInfoForm(props) {
     }
 
     function handleCurrency(e) {
-        console.log(e.target.value);
         props.setCurrency(e.target.value);
     }
 

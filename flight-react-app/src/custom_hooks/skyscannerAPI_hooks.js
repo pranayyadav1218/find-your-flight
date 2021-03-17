@@ -27,7 +27,6 @@ function usePlacesQuery(query) {
         async function placesAPICall() {
             let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/?" + new URLSearchParams({query: query}), options);
             response = await response.json();
-            //console.log(response.Places);
             setPlaces(response.Places);
             
         }
@@ -97,9 +96,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
         }
 
     }, [responseId, origin, destination, outboundDate, inboundDate, currency]);
-    if (responseId==="Quotes") {
-        console.log(arr);
-    }
+    
     return arr;
 }
 
@@ -219,17 +216,13 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, current
 function sortFlights(arr, sortLowToHigh) {
     let sortBy = (sortLowToHigh ? 0 : 1);
     let result = mergeSort(arr, sortBy);
-    console.log(result);
     return result;
 }
 
 // merge function of mergesort
 function merge(left, right, sortBy) {
     let arr = [];
-    //console.log("/////////////////")
-    //console.log("Merge: ")
-    //console.log(left)
-    //console.log(right)
+   
     while (left.length !== 0 && right.length !== 0) {
         switch (sortBy) {
             case 0: // sortLowToHigh is true: pop the row object with smaller price between left[0] and right[0]
@@ -255,9 +248,7 @@ function merge(left, right, sortBy) {
     }
     
     let result = [...arr, ...left, ...right];
-    //console.log("into: ")
-    //console.log(result)
-    //console.log("/////////////////")
+    
     return result;
 }
 

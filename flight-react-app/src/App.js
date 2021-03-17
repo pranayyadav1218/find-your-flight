@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        Flight React App
+        Find a flight!
       </div>
       <div>
         <FlightInfo></FlightInfo>
