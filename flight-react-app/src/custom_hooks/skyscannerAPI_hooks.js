@@ -18,7 +18,7 @@ function usePlacesQuery(query) {
         const options = {
             method: "GET",
             headers: {
-                "x-rapidapi-key": "a80276efe6mshdba99d004ae62b1p11b87cjsn61b6448bc521",
+                "x-rapidapi-key": process.env.REACT_APP_SKYSCANNER_API_KEY,
                 "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
                 "useQueryString": true
             }
@@ -47,7 +47,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
         const options =  {
             method: "GET",
             headers: {
-                "x-rapidapi-key": "a80276efe6mshdba99d004ae62b1p11b87cjsn61b6448bc521",
+                "x-rapidapi-key": process.env.REACT_APP_SKYSCANNER_API_KEY,
                 "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
             }
         };
@@ -109,10 +109,11 @@ function useCurrenciesList() {
         const options =  {
             "method": "GET",
             "headers": {
-                "x-rapidapi-key": "a80276efe6mshdba99d004ae62b1p11b87cjsn61b6448bc521",
+                "x-rapidapi-key": process.env.REACT_APP_SKYSCANNER_API_KEY,
                 "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"
             }
         }
+      
         async function currencyAPICall() {
             let response = await fetch("https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies", 
                options);
