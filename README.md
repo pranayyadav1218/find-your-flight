@@ -6,8 +6,8 @@ App website: https://pyadav1218.github.io/find-your-flight/
 ## Features:
 - Quickly search flight options that meet your criteria!
 - Sort flight options by price (low-to-high and high-to-low)!
-- Intuitive UI makes searching for flights super easy!
-- Find the cheapest flights in seconds!
+- Find your return flight alongside your outbound flight!
+- Search for flights leaving and returning on specific dates!
 
 
 ### About the project:
