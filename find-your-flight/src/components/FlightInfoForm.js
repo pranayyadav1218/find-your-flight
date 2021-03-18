@@ -67,6 +67,9 @@ function FlightInfoForm(props) {
         props.setInboundDate(e.target.value);
 
         if (e.target.value === "anytime") {
+            if (inboundAnytimeChecked) {
+                props.setInboundDate("");
+            }
             setInboundAnytimeChecked(!inboundAnytimeChecked);
         }
     }
@@ -122,7 +125,7 @@ function FlightInfoForm(props) {
                     </label>
                     <div>
                         <input type="checkbox" id="outboundDateAnytime" name="outboundDateAnytime" value="anytime" onChange={handleOutboundDate} checked={outboundAnytimeChecked}></input>
-                        <label htmlFor="outboundDateAnytime"><small>Anytime</small></label>
+                        <label htmlFor="outboundDateAnytime"><small> Anytime</small></label>
                     </div>
                 </div>
             
@@ -133,7 +136,7 @@ function FlightInfoForm(props) {
                     </label>
                     <div>
                         <input type="checkbox" id="inboundDateAnytime" name="inboundDateAnytime" value="anytime" onChange={handleInboundDate} checked={inboundAnytimeChecked}></input>
-                        <label htmlFor="inboundDateAnytime"><small>Anytime</small></label>
+                        <label htmlFor="inboundDateAnytime"><small> Anytime</small></label>
                     </div>
                 </div>
 

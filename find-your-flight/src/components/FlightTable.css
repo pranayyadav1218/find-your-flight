@@ -65,7 +65,7 @@
 .RowItem {
     text-align: left;
     border: 1px solid black;
-    min-width: 5vmin;
+    min-width: 5vw;
     width: auto;
     padding: 5px;
     margin: auto;
