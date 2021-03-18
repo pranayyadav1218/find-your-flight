@@ -9,16 +9,17 @@
 
 .FlightInfoForm {
     width: auto;
-    max-width: 30vw;
+    max-width: 50vw;
+    min-width: 30vw;
     padding: 10px;
     margin: auto;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     background-color:rgb(248, 231, 235) ;
     border-radius: 20px;
     border: 1px solid rgb(151, 26, 53);
     border-width: 3px;
-    animation: fade-in 3s;
+    animation: fade-in 1s ease-in;
 
 }
 
@@ -30,7 +31,6 @@
     border-bottom: 1px solid rgb(226, 206, 211);
     border-width: 10px;
     border-style:unset;
-    animation: fade-in ease-in 1s;
 }
 
 .InputField {
@@ -38,10 +38,37 @@
     border-radius: 20px;
     padding: 5px;
     border-width: 1px;
+    width: 50%;
 }
 
 input:focus {
     outline-width: 1;
     border-radius: 20px;
     outline-color: rgb(151, 26, 53);
+}
+
+.ClearButton {
+    border: 1px solid rgb(131, 23, 46);
+    border-width: 2px;
+    border-radius: 20px;
+    background-color: rgb(196, 71, 133);
+    color: white;
+    margin-top: 10px;
+    min-width: 10%;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+}
+
+.ClearButton:hover {
+    background-color:rgb(173, 46, 110);
+}
+
+.ClearButton:active {
+    background-color: rgb(170, 40, 105);
+    transform: translateY(2px);
+
 }

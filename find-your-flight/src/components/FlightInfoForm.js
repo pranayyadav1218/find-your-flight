@@ -80,15 +80,29 @@ function FlightInfoForm(props) {
         props.setCurrency(e.target.value);
     }
 
+    function handleClear(e) {
+        e.preventDefault();
+        setOriginQuery("");
+        setDestinationQuery("");
+        setShowOrigins(false);
+        setShowDestinations(false);
+        props.setOrigin("");
+        props.setDestination("");
+        props.setOutboundDate("anytime");
+        props.setInboundDate("");
+        props.setCurrency("USD");
+    }
+
     let today = new Date().toISOString().substring(0, 10);
 
     return (
         <div className="FlightInfoForm">
+            <big>Search for Flights:</big>
             <form onSubmit={props.onSubmit}> 
                 {/* Section for Origin */}
                 <div className="InputArea">
                     <label>
-                        Search Origin: <input className="InputField" value={originQuery} onChange={handleOrigin}/>
+                        From: <input className="InputField" value={originQuery} onChange={handleOrigin}/>
                     </label>
                     {showOrigins ? <AirportSelect places={originPlaces} value={props.origin} onChange={handleOriginSelect}/> : <></>}
                 </div>
@@ -97,7 +111,7 @@ function FlightInfoForm(props) {
                 {/* Section for Destination */}
                 <div className="InputArea">
                     <label>
-                        Search Destination: <input className="InputField" value={destinationQuery} onChange={handleDestination}/>
+                        To: <input className="InputField" value={destinationQuery} onChange={handleDestination}/>
                         {showDestinations ? <AirportSelect places={destinationPlaces} value={props.destination} onChange={handleDestinationSelect}/> : <></>}
                     </label>
                 </div>
@@ -105,21 +119,21 @@ function FlightInfoForm(props) {
                 {/* Outbound Date Section */}
                 <div className="InputArea">
                     <label>
-                        Departure Date: <input className="InputField" type="date" value={props.outboundDate} min={today} max={props.inboundDate} onChange={handleOutboundDate}></input> <i>(optional)</i>
+                        Departure Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={props.outboundDate} min={today} max={props.inboundDate} onChange={handleOutboundDate}></input> 
                     </label>
                 </div>
 
                 {/* Inbound Date Section */}
                 <div className="InputArea">
                     <label>
-                        Return Date: <input className="InputField" type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input> <i>(optional)</i>
+                        Return Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input>
                     </label>
                 </div>
 
                 {/* Currency Select Section */}
                 <div className="InputArea">
-                    <label>Choose Currency: </label>
-                    <select className="InputField" value={props.currency} onChange={handleCurrency}>
+                    <label>Currency: </label>
+                    <select className="InputField" value={props.currency} onChange={handleCurrency} style={{width: "80px", maxWidth: "50%"}}>
                         <option>USD</option>
                         {(currenciesList !== undefined) ? currenciesList.map((cur) => {
                             return (<option key={cur.Code} value={cur.Code}>{cur.Code}</option>)
@@ -130,8 +144,8 @@ function FlightInfoForm(props) {
                 {/* Form Submit Button 
                     <button disabled={!(destinationSelected && originSelected)}>Find Flights!</button>
                 */}
-                
             </form>
+            <button className="ClearButton" onClick={handleClear}>Clear</button>
         </div>
     )
 }
