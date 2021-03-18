@@ -47,6 +47,10 @@ input:focus {
     outline-color: rgb(151, 26, 53);
 }
 
+:checked {
+    border: 5px solid red;
+}
+
 .ClearButton {
     border: 1px solid rgb(131, 23, 46);
     border-width: 2px;

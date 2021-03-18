@@ -4,17 +4,21 @@ import { useCurrenciesList, usePlacesQuery } from '../custom_hooks/skyscannerAPI
 import './FlightInfoForm.css';
 
 function FlightInfoForm(props) {
-    // Values for origin
+    // Values dealing with the origin
     const [originQuery, setOriginQuery] = useState(""); // query to use when fetching origins places
-    const [showOrigins, setShowOrigins] = useState(false); // controls when origin-select screen is shown
+    const [showOrigins, setShowOrigins] = useState(false); // controls when origin select-menu is shown
     const originPlaces = usePlacesQuery(originQuery); // Places list for origins, value is retrieved from a custom hook
-    //const [originSelected, setOriginSelected] = useState(false); // allows us to capture the user's final choice
     
+    // Values dealing with the destination
     const [destinationQuery, setDestinationQuery] = useState(""); // query to use when fetching destinations
     const destinationPlaces = usePlacesQuery(destinationQuery); // Places list for destinations, value retrieved from custom hook
-    const [showDestinations, setShowDestinations] = useState(false); // controls when destination-select screen is shown
-    //const [destinationSelected, setDestinationSelected] = useState(false); // allows us to capture user's final choice (starts out as true to prevent destination from rendering)
+    const [showDestinations, setShowDestinations] = useState(false); // controls when destination select-menu is shown
     
+    // Booleans for checkboxes
+    const [outboundAnytimeChecked, setOutboundAnytimeChecked] = useState(false);
+    const [inboundAnytimeChecked, setInboundAnytimeChecked] = useState(false);
+
+    // List of all supported currencies retrieved from custom hook
     const currenciesList = useCurrenciesList();
 
     function handleOrigin(e) {
@@ -44,36 +48,27 @@ function FlightInfoForm(props) {
 
     function handleOriginSelect(e) {
         props.setOrigin(e.target.value);
-        /*
-        if (e.target.value !== "-") {
-            setOriginSelected(true);   
-        }
-        else
-            setOriginSelected(false);
-            */
+        
     }
     function handleDestinationSelect(e) {
         props.setDestination(e.target.value);
-        /*
-        if (e.target.value !== "-") {
-            setDestinationSelected(true);
-        }
-        else 
-            setDestinationSelected(false);
-            */
+        
     }
 
     function handleOutboundDate(e) {
-        if (e.target.value !== "") {
-            props.setOutboundDate(e.target.value);
-        }
-        else {
-            props.setOutboundDate("anytime");
+        props.setOutboundDate(e.target.value);
+
+        if (e.target.value === "anytime") {
+            setOutboundAnytimeChecked(!outboundAnytimeChecked);
         }
     }
 
     function handleInboundDate(e) {
         props.setInboundDate(e.target.value);
+
+        if (e.target.value === "anytime") {
+            setInboundAnytimeChecked(!inboundAnytimeChecked);
+        }
     }
 
     function handleCurrency(e) {
@@ -82,10 +77,14 @@ function FlightInfoForm(props) {
 
     function handleClear(e) {
         e.preventDefault();
+
+        // Reset all values to their defaults
         setOriginQuery("");
         setDestinationQuery("");
         setShowOrigins(false);
         setShowDestinations(false);
+        setInboundAnytimeChecked(false);
+        setOutboundAnytimeChecked(false);
         props.setOrigin("");
         props.setDestination("");
         props.setOutboundDate("anytime");
@@ -119,15 +118,23 @@ function FlightInfoForm(props) {
                 {/* Outbound Date Section */}
                 <div className="InputArea">
                     <label>
-                        Departure Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={props.outboundDate} min={today} max={props.inboundDate} onChange={handleOutboundDate}></input> 
+                        Departure Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={(props.outboundDate !== "anytime") ? props.outboundDate : ""} min={today} max={props.inboundDate} onChange={handleOutboundDate} disabled={outboundAnytimeChecked}></input> 
                     </label>
+                    <div>
+                        <input type="checkbox" id="outboundDateAnytime" name="outboundDateAnytime" value="anytime" onChange={handleOutboundDate} checked={outboundAnytimeChecked}></input>
+                        <label htmlFor="outboundDateAnytime"><small>Anytime</small></label>
+                    </div>
                 </div>
-
+            
                 {/* Inbound Date Section */}
                 <div className="InputArea">
                     <label>
-                        Return Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={props.inboundDate} min={props.outboundDate} onChange={handleInboundDate}></input>
+                        Return Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={(props.inboundDate !== "anytime") ? props.inboundDate : ""} min={props.outboundDate} onChange={handleInboundDate} disabled={inboundAnytimeChecked}></input>
                     </label>
+                    <div>
+                        <input type="checkbox" id="inboundDateAnytime" name="inboundDateAnytime" value="anytime" onChange={handleInboundDate} checked={inboundAnytimeChecked}></input>
+                        <label htmlFor="inboundDateAnytime"><small>Anytime</small></label>
+                    </div>
                 </div>
 
                 {/* Currency Select Section */}

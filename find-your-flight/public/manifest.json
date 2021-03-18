@@ -1,11 +1,11 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Find your Flight!",
+  "name": "Find your Flight!",
   "icons": [
     {
       "src": "iconfinder_airplane1_216191.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "488x512"
     }
   ],
   "start_url": ".",
