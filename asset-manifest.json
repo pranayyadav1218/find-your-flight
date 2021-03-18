@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/find-your-flight/static/css/main.6805fc49.chunk.css",
+    "main.css": "/find-your-flight/static/css/main.53815c8a.chunk.css",
     "main.js": "/find-your-flight/static/js/main.9be5b89c.chunk.js",
     "main.js.map": "/find-your-flight/static/js/main.9be5b89c.chunk.js.map",
     "runtime-main.js": "/find-your-flight/static/js/runtime-main.c37c520e.js",
@@ -10,14 +10,14 @@
     "static/js/3.2082f02b.chunk.js": "/find-your-flight/static/js/3.2082f02b.chunk.js",
     "static/js/3.2082f02b.chunk.js.map": "/find-your-flight/static/js/3.2082f02b.chunk.js.map",
     "index.html": "/find-your-flight/index.html",
-    "static/css/main.6805fc49.chunk.css.map": "/find-your-flight/static/css/main.6805fc49.chunk.css.map",
+    "static/css/main.53815c8a.chunk.css.map": "/find-your-flight/static/css/main.53815c8a.chunk.css.map",
     "static/js/2.52decd2e.chunk.js.LICENSE.txt": "/find-your-flight/static/js/2.52decd2e.chunk.js.LICENSE.txt",
     "static/media/App.css": "/find-your-flight/static/media/background-3104413_1920.0464304d.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.c37c520e.js",
     "static/js/2.52decd2e.chunk.js",
-    "static/css/main.6805fc49.chunk.css",
+    "static/css/main.53815c8a.chunk.css",
     "static/js/main.9be5b89c.chunk.js"
   ]
 }
