@@ -11,7 +11,7 @@ function App() {
         <FlightSearchPage></FlightSearchPage>
       </div>
       <div className="App-footer">
-        <p><a href="https://github.com/pyadav1218/">Pranay Yadav</a> | <a href="https://reactjs.org/">ReactJS</a>, <a href="https://rapidapi.com/skyscanner/api/skyscanner-flight-search">Skyscanner API</a> | March 2021</p>
+        <p>Made by <a href="https://github.com/pyadav1218/">Pranay Yadav</a> | <a href="https://github.com/pyadav1218/find-your-flight">Project GitHub</a> | Made with <a href="https://reactjs.org/">ReactJS</a>, <a href="https://rapidapi.com/skyscanner/api/skyscanner-flight-search">Skyscanner API</a> | March 2021</p>
       </div>
     </div>
     
