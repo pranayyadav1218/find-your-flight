@@ -50,27 +50,18 @@ function FlightTable(props) {
                         
                         
                             {props.allFlights.map((row, index) => {
-                                let style = {
-                                        backgroundColor: '',
-                                        border: '',
-                                    }
+                                let rowStyle = "TableRow";
 
                                 // Highlight the cheapest flight using CSS styling
                                 if (props.sortLowToHigh && index === 0) {
-                                    style = {
-                                        backgroundColor: 'antiquewhite',
-                                        border: '4px solid limegreen',
-                                    }
+                                    rowStyle = "CheapestRow"
                                 }
                                 else if (!props.sortLowToHigh && index === (props.allFlights.length-1)) {
-                                    style = {
-                                        backgroundColor: 'antiquewhite',
-                                        border: '4px solid limegreen',
-                                    }
+                                    rowStyle = "CheapestRow"
                                 }
 
                                 return (
-                                    <tr key={index} className="TableRow" style={style}>
+                                    <tr key={index} className={rowStyle}>
                                         
                                         <td className='RowItem'>{row.OutboundCarrier }</td>
                                         <td className='RowItem'>{row.OutboundOrigin }</td>
