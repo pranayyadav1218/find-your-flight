@@ -57,21 +57,21 @@ function FlightInfoForm(props) {
 
     function handleOutboundDate(e) {
         props.setOutboundDate(e.target.value);
-
         if (e.target.value === "anytime") {
             setOutboundAnytimeChecked(!outboundAnytimeChecked);
         }
+    
     }
 
     function handleInboundDate(e) {
         props.setInboundDate(e.target.value);
-
         if (e.target.value === "anytime") {
             if (inboundAnytimeChecked) {
                 props.setInboundDate("");
             }
             setInboundAnytimeChecked(!inboundAnytimeChecked);
         }
+        
     }
 
     function handleCurrency(e) {
@@ -100,7 +100,7 @@ function FlightInfoForm(props) {
     return (
         <div className="FlightInfoForm">
             <big>Search for Flights:</big>
-            <form onSubmit={props.onSubmit}> 
+            <form> 
                 {/* Section for Origin */}
                 <div className="InputArea">
                     <label>
@@ -130,15 +130,17 @@ function FlightInfoForm(props) {
                 </div>
             
                 {/* Inbound Date Section */}
+                   
                 <div className="InputArea">
                     <label>
-                        Return Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={(props.inboundDate !== "anytime") ? props.inboundDate : ""} min={props.outboundDate} onChange={handleInboundDate} disabled={inboundAnytimeChecked}></input>
+                        Return Date <small><i>(optional)</i></small>: <input className="InputField" type="date" value={(props.inboundDate !== "anytime") ? props.inboundDate : ""} min={(props.outboundDate !== "anytime") ? props.outboundDate : today} onChange={handleInboundDate} disabled={inboundAnytimeChecked}></input>
                     </label>
                     <div>
                         <input type="checkbox" id="inboundDateAnytime" name="inboundDateAnytime" value="anytime" onChange={handleInboundDate} checked={inboundAnytimeChecked}></input>
                         <label htmlFor="inboundDateAnytime"><small> Anytime</small></label>
                     </div>
-                </div>
+                </div> 
+                
 
                 {/* Currency Select Section */}
                 <div className="InputArea">

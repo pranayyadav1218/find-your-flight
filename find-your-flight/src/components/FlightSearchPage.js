@@ -24,17 +24,17 @@ function FlightSearchPage() {
     
     /* Custom hook returns a sorted array of objects with the information that 
         needs to be displayed (each object represents a quote and 1 row in the table) */
-    const allFlights = useFlights(quotes, carriers, places, currencies, sortLowToHigh, currency);
+    const allFlights = useFlights(quotes, carriers, places, currencies, sortLowToHigh, outboundDate, inboundDate, currency);
 
     /* useEffect that updates whether or not to show the table based on changes to the quotes array */
     useEffect(() => {
-        if (quotes === [] || quotes === undefined || quotes.length === 0) {
+        if (quotes === [] || quotes === undefined || quotes.length === 0 || allFlights === [] || allFlights.length === 0) {
             setShowTable(false);
         }
         else {
             setShowTable(true);
         }
-    }, [quotes]);
+    }, [quotes, allFlights]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -47,7 +47,7 @@ function FlightSearchPage() {
         //console.log(outboundDates);
         //console.log(inboundDates);
         
-        //
+        // Boolean logic to determine whether it is safe to show the information or not
         let bool = (quotes !== [] && quotes !== undefined && carriers !== [] && carriers !== undefined && places !== [] && places !== undefined && quotes.length !== 0);
         setShowTable(bool); 
     }
@@ -73,7 +73,7 @@ function FlightSearchPage() {
             </FlightInfoForm>
             
             {showTable ? <FlightTable allFlights={allFlights} sortLowToHigh={sortLowToHigh} handleSortSelect={handleSortSelect}></FlightTable> : <></>}
-            {(origin.length > 1 && destination.length > 1 && !showTable) ? <p>No Flights Available</p> : <></>}
+            {(origin.length > 1 && destination.length > 1 && !showTable) ? <p style={{animation: "fade-in 2s", animationDelay: "2s", animationFillMode: "backwards"}}>No Flights Available</p> : <></>}
         </div>
     )
 }

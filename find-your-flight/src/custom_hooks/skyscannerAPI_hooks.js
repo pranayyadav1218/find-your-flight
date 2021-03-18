@@ -51,7 +51,9 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
             }
         };
         async function APICall() {
-            let response = await fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/${currency}/en-US/${origin}/${destination}/${outboundDate}/${inboundDate}`,
+            let APICallURL = `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/${currency}/en-US/${origin}/${destination}/${outboundDate}/${inboundDate}`;
+            //console.log(APICallURL);
+            let response = await fetch(APICallURL,
                 options).catch(err => {console.log("ERROR: " + err)});
             await response.json().then((response) => {
                 switch (responseId) {
@@ -123,81 +125,93 @@ function useCurrenciesList() {
     return list;
 }
 
-function useFlights(quotes, carriers, places, currencies, sortLowToHigh, currentCurrency) {
+function useFlights(quotes, carriers, places, currencies, sortLowToHigh, outboundDate, inboundDate, currentCurrency) {
     const [flightsArr, setFlightsArr] = useState([]);
     useEffect(() => {
         if (quotes !== undefined) {
 
             let result = [];
+            setFlightsArr(result); // updates flightsArr state at least once
 
             quotes.forEach(quote => {
-                
-                let rowObject = {
-                    OutboundCarrier: "",
-                    OutboundOrigin: "",
-                    OutboundDestination: "",
-                    OutboundDepartureDate: "",
-                    InboundCarrier: "",
-                    InboundOrigin: "",
-                    InboundDestination: "", 
-                    InboundDepartureDate: "",
-                    PriceSymbol: "",
-                    Price: "",
-                    Direct: "",
-                };
 
+                let addToList = true; // determines whether the entry meets the criteria to be added to the final list that will be displayed
 
-                // Set all carrier names
-                if (carriers !== undefined) {
-                    carriers.forEach(carrier => {
-                        if (carrier.CarrierId === quote.OutboundLeg.CarrierIds[0]) {
-                            rowObject.OutboundCarrier = carrier.Name;
-                        }
-                        if (quote.InboundLeg !== undefined) {
-                            if (carrier.CarrierId === quote.InboundLeg.CarrierIds[0]) {
-                                rowObject.InboundCarrier = carrier.Name;
+                // if the current quote's departure dates do not match the dates entered by the user, this quote will not be added to the list
+                if (quote.OutboundLeg !== undefined && outboundDate !== "anytime") { 
+                    addToList = addToList && (quote.OutboundLeg.DepartureDate.substring(0, 10) === outboundDate);
+                }
+                if (quote.InboundLeg !== undefined && (inboundDate !== "" && inboundDate !== "anytime")) {
+                    addToList = addToList && (quote.InboundLeg.DepartureDate.substring(0, 10) === inboundDate);
+                }
+
+                if (addToList) {
+                    // Row object with all data fields need to display to user
+                    let rowObject = {
+                        OutboundCarrier: "",
+                        OutboundOrigin: "",
+                        OutboundDestination: "",
+                        OutboundDepartureDate: "",
+                        InboundCarrier: "",
+                        InboundOrigin: "",
+                        InboundDestination: "", 
+                        InboundDepartureDate: "",
+                        PriceSymbol: "",
+                        Price: "",
+                        Direct: "",
+                    };
+
+                    // Set all carrier names
+                    if (carriers !== undefined) {
+                        carriers.forEach(carrier => {
+                            if (carrier.CarrierId === quote.OutboundLeg.CarrierIds[0]) {
+                                rowObject.OutboundCarrier = carrier.Name;
                             }
-                        }
-                    });
-                }
-
-                // Set all origin/destination names
-                if (places !== undefined) {
-                    places.forEach(place => {
-                        if (place.PlaceId === quote.OutboundLeg.OriginId) {
-                            rowObject.OutboundOrigin = place.Name;
-                        }
-                        if (place.PlaceId === quote.OutboundLeg.DestinationId) {
-                            rowObject.OutboundDestination = place.Name;
-                        }
-                        if (quote.InboundLeg !== undefined) {
-                            if (place.PlaceId === quote.InboundLeg.OriginId) {
-                                rowObject.InboundOrigin = place.Name;
+                            if (quote.InboundLeg !== undefined) {
+                                if (carrier.CarrierId === quote.InboundLeg.CarrierIds[0]) {
+                                    rowObject.InboundCarrier = carrier.Name;
+                                }
                             }
-                            if (place.PlaceId === quote.InboundLeg.DestinationId) {
-                                rowObject.InboundDestination = place.Name;
+                        });
+                    }
+
+                    // Set all origin/destination names
+                    if (places !== undefined) {
+                        places.forEach(place => {
+                            if (place.PlaceId === quote.OutboundLeg.OriginId) {
+                                rowObject.OutboundOrigin = place.Name;
                             }
-                        }
-                    });
-                }
+                            if (place.PlaceId === quote.OutboundLeg.DestinationId) {
+                                rowObject.OutboundDestination = place.Name;
+                            }
+                            if (quote.InboundLeg !== undefined) {
+                                if (place.PlaceId === quote.InboundLeg.OriginId) {
+                                    rowObject.InboundOrigin = place.Name;
+                                }
+                                if (place.PlaceId === quote.InboundLeg.DestinationId) {
+                                    rowObject.InboundDestination = place.Name;
+                                }
+                            }
+                        });
+                    }
 
-                // Set departure dates
-                if (quote.OutboundLeg !== undefined) {
-                    rowObject.OutboundDepartureDate = quote.OutboundLeg.DepartureDate.substring(0, 10);
-                    rowObject.Direct = (quote.Direct ? "Yes" : "No");
-                }
-                if (quote.InboundLeg !== undefined) {
-                    rowObject.InboundDepartureDate = quote.InboundLeg.DepartureDate.substring(0, 10);
-                }
+                    // Set departure dates
+                    if (quote.OutboundLeg !== undefined) {
+                        rowObject.OutboundDepartureDate = quote.OutboundLeg.DepartureDate.substring(0, 10);
+                        rowObject.Direct = (quote.Direct ? "Yes" : "No");
+                    }
+                    if (quote.InboundLeg !== undefined) {
+                        rowObject.InboundDepartureDate = quote.InboundLeg.DepartureDate.substring(0, 10);
+                    }
 
-                // Set price symbol and value
-                rowObject.PriceSymbol = ((currencies !== undefined && currencies[0] !== undefined) ? (currencies[0].Symbol.length === 1 ? currencies[0].Symbol : currencies[0].Symbol + " " ) : "")
-                rowObject.Price = (quote.MinPrice !== undefined ? quote.MinPrice : "");
-                // Add row object to array of rows
-                
-                result = result.concat([rowObject]);
-                setFlightsArr(result);
-
+                    // Set price symbol and value
+                    rowObject.PriceSymbol = ((currencies !== undefined && currencies[0] !== undefined) ? (currencies[0].Symbol.length === 1 ? currencies[0].Symbol : currencies[0].Symbol + " " ) : "")
+                    rowObject.Price = (quote.MinPrice !== undefined ? quote.MinPrice : "");
+                    // Add row object to array of rows
+                    
+                    result = result.concat([rowObject]);
+                    setFlightsArr(result);
+                }
             })
             if (!sortLowToHigh) // By default, the query sorts retrieves the quotes from low prices to high price, so only need to call sortFlights() when we want the opposite order
                 setFlightsArr(sortFlights(result, sortLowToHigh));
@@ -205,7 +219,7 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, current
         }
         
         
-    }, [quotes, carriers, places, currencies, sortLowToHigh, currentCurrency]);
+    }, [quotes, carriers, places, currencies, sortLowToHigh, outboundDate, inboundDate, currentCurrency]);
 
     
 
