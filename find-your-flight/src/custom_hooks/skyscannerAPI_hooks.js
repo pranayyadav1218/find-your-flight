@@ -16,7 +16,7 @@
 import { useState, useEffect } from 'react';
 
 /* 
-    Function:   usePlacesQuery() 
+    Function:   usePlacesQuery
     Arguments: 
                 query:  string representing a query to be made to the Skyscanner API to retrieve a list of airports
     Returns: 
@@ -55,7 +55,7 @@ function usePlacesQuery(query) {
 }
 
 /* 
-    Function:   useBrowseDates() 
+    Function:   useBrowseDates 
     Arguments: 
                 responseId: string representing the specific information that should be returned (Quotes, Carriers, Places, etc)
                 origin: string representing the origin of a flight
@@ -138,7 +138,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
 
 
 /* 
-    Function:   useCurrenciesList() 
+    Function:   useCurrenciesList 
     Arguments:  none
     Returns: 
                 list: array of objects containing the results of the API call or an empty array in case of a failed or invalid API call
@@ -171,7 +171,7 @@ function useCurrenciesList() {
 
 
 /* 
-    Function:   useFlights() 
+    Function:   useFlights
     Arguments: 
                 quotes: array of objects representing quotes for flights retrieved from a previous Skyscanner API call
                 carriers: array of objects representing carriers involved in a flight
@@ -288,7 +288,7 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, outboun
 }
 
 /* 
-    Function:   sortFlights() 
+    Function:   sortFlights
     Arguments: 
                 arr: array of row objects to be sorted
                 sortLowToHigh: sort from low to high price or vice versa
