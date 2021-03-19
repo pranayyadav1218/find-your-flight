@@ -1,18 +1,33 @@
-import { useState, useEffect } from 'react';
+/*  
+    Filename:   skyscannerAPI_hooks.js
+    Author:     Pranay Yadav
+    Description:
+                All custom hooks relating to Skyscanner API calls
+                are defined and exported from this file. This allows
+                me to reuse hooks throughout function components and
+                make my code more organized and readable. When used 
+                with the useEffect() React hook, I am able to update
+                values inside function components in real-time.
 
-
-/*  All custom hooks relating to Skyscanner API calls
-    are defined and exported from this file. This allows
-    me to reuse hooks throughout function components and
-    make my code more organized and readable.
-
-    All custom react hooks must start with 'use', hence 
-    why these functions are named 'use...()'
+                All custom React hooks must start with 'use', hence 
+                why these functions are named 'use...()'.
 */
 
+import { useState, useEffect } from 'react';
+
+/* 
+    Function:   usePlacesQuery
+    Arguments: 
+                query:  string representing a query to be made to the Skyscanner API to retrieve a list of airports
+    Returns: 
+                places: array of objects containing the results of the API call or an empty array in case of a failed API call
+    Description:
+                Custom React hook that returns an array of objects representing places retrieved from an API call to Skyscanner.
+                Automatically updates the list whenever the query value changes using the useEffect() React hook.
+
+*/
 function usePlacesQuery(query) {
     const [places, setPlaces] = useState([]);
-    let result = places;
     // Only makes the API call when the value of query changes and when query is not an empty string
     useEffect(() => {
         const options = {
@@ -34,11 +49,28 @@ function usePlacesQuery(query) {
             placesAPICall();
         }
         
-    }, [query]);
+    }, [query]); 
 
-    return result;
+    return places;
 }
 
+/* 
+    Function:   useBrowseDates 
+    Arguments: 
+                responseId: string representing the specific information that should be returned (Quotes, Carriers, Places, etc)
+                origin: string representing the origin of a flight
+                destination: string representing the destination of a flight
+                outboundDate: string with value "anytime" or in yyyy-mm-dd format representing the departure date of a flight
+                inboundDate: string that is empty, "anytime", or in yyyy-mm-dd format representing the date of a return flight
+                currency: string representing the currency the user wants prices displayed in
+    Returns: 
+                arr: array of objects containing the results of the API call or an empty array in case of a failed or invalid API call
+    Description:
+                Custom React hook that returns an array of objects representing the "responseId" (Quotes, Carriers, Places, etc).
+                Automatically updates the list whenever any of the arguments are updated using the React useEffect() hook.
+                Makes an API call to Skyscanner to retrieve flight information based on user input.
+
+*/
 function useBrowseDates(responseId, origin, destination, outboundDate, inboundDate, currency) {
     const [arr, setArr] = useState([]);
     // Only makes API call when there is a change to any of the function arguments AND when origin && destination are not empty strings
@@ -56,6 +88,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
             let response = await fetch(APICallURL,
                 options).catch(err => {console.log("ERROR: " + err)});
             await response.json().then((response) => {
+                // Determine which values to isolate from the response
                 switch (responseId) {
                     case "Quotes":
                         setArr(response.Quotes);
@@ -86,6 +119,7 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
                 });
             });
         } 
+        // Boolean logic to determine whether a valid API call can be made
         let allowAPICall = ((origin !== "" && destination !== "" ) && (origin !== undefined && destination !== undefined) 
                                 && (currency !== undefined) && (origin !== "-" && destination !== "-") 
                                 && (outboundDate.length === 10 || outboundDate === "anytime"));
@@ -102,6 +136,16 @@ function useBrowseDates(responseId, origin, destination, outboundDate, inboundDa
     return arr;
 }
 
+
+/* 
+    Function:   useCurrenciesList 
+    Arguments:  none
+    Returns: 
+                list: array of objects containing the results of the API call or an empty array in case of a failed or invalid API call
+    Description:
+                Custom React hook that returns an array of objects representing currencies supported by Skyscanner API.
+
+*/
 function useCurrenciesList() {
     const [list, setList] = useState([]);
     useEffect(()=> {
@@ -125,6 +169,26 @@ function useCurrenciesList() {
     return list;
 }
 
+
+/* 
+    Function:   useFlights
+    Arguments: 
+                quotes: array of objects representing quotes for flights retrieved from a previous Skyscanner API call
+                carriers: array of objects representing carriers involved in a flight
+                places: array of objects representing places (airports) involved in a flight
+                currencies: array of objects representing the currencies in which the price will be displayed
+                sortLowToHigh: boolean where true = sort the array in order of lowest to highest price and false = sort the array from highest to lowest price
+                outboundDate: string representing the departure date for the outbound flight entered by the user
+                inboundDate: string representing the departure date for the return flight entered by the user
+                currency: string representign the currency preference entered by the user
+    Returns: 
+                flightsArr: sorted array of objects, each representing a row in the table displaying flight information related to a user's search
+    Description:
+                Custom React hook that returns an array of objects representing flight information to be displayed.
+                Each object in the array returned represents a row in the table that displays all flights relating to a user's search.
+                Automatically updates the list whenever any of the arguments are updated using the React useEffect() hook.
+
+*/
 function useFlights(quotes, carriers, places, currencies, sortLowToHigh, outboundDate, inboundDate, currentCurrency) {
     const [flightsArr, setFlightsArr] = useState([]);
     useEffect(() => {
@@ -218,15 +282,23 @@ function useFlights(quotes, carriers, places, currencies, sortLowToHigh, outboun
 
         }
         
-        
     }, [quotes, carriers, places, currencies, sortLowToHigh, outboundDate, inboundDate, currentCurrency]);
-
-    
 
     return flightsArr;
 }
 
-// Performs a mergesort on flights array based on Price
+/* 
+    Function:   sortFlights
+    Arguments: 
+                arr: array of row objects to be sorted
+                sortLowToHigh: sort from low to high price or vice versa
+    Returns: 
+                result: sorted array of row objects
+    Description:
+                Functions that performs a mergesort on an array of row objects.
+                Called by the useFlights() hook to sort the array row objects before returning the array.
+
+*/
 function sortFlights(arr, sortLowToHigh) {
     let sortBy = (sortLowToHigh ? 0 : 1);
     let result = mergeSort(arr, sortBy);
