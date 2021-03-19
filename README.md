@@ -29,4 +29,4 @@ App website: https://pyadav1218.github.io/find-your-flight/
 
 Development Period: 03/13/2021 - 03/19/2021
 
-Developer: Pranay Yadav
+Developer: [Pranay Yadav](https://github.com/pyadav1218)
